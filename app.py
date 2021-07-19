@@ -1,8 +1,7 @@
 """Flask app for Cupcakes"""
 
-from typing import Sized
 from flask import Flask, request, jsonify
-from flask.templating import render_template_string
+from flask.templating import render_template
 from models import db, connect_db, Cupcake
 from flask_sqlalchemy import SQLAlchemy
 
@@ -72,7 +71,7 @@ def update_cupcake(cupcake_id):
     cupcake.image = request.json.get("image", cupcake.image) 
 
     db.session.commit()
-    return jsonify(cupcake=cupcake.serialize()) #NOTE: 200 or 201? 
+    return jsonify(cupcake=cupcake.serialize()) 
 
 
 @app.route('/api/cupcakes/<int:cupcake_id>', methods=['DELETE'])
@@ -83,3 +82,8 @@ def delete_cupcake(cupcake_id):
     db.session.delete(cupcake)
     db.session.commit()
     return jsonify(message="Deleted")
+
+@app.route('/api')
+def index_page():
+    cupcakes = Cupcake.query.all()
+    return render_template('index.html', cupcakes=cupcakes)

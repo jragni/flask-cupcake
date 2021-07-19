@@ -115,11 +115,6 @@ class CupcakeViewsTestCase(TestCase):
             
             # ASK for testing ---> do we hard code values?
             # testing for changes in rating 
-            CUPCAKE_DATA_2 = {
-                "flavor": "TestFlavor2",
-                "size": "TestSize2",
-                "rating": 1,
-                "image": "http://test.com/cupcake2.jpg"}
             db.session.commit()
 
             resp = client.patch(url, json=CUPCAKE_DATA_2)
@@ -128,13 +123,12 @@ class CupcakeViewsTestCase(TestCase):
 
             data = resp.json
 
-            print(data)
             self.assertEqual(data, {
                 "cupcake": {
                     "flavor": "TestFlavor2",
                     "id" : self.cupcake.id,
                     "size": "TestSize2",
-                    "rating": 1,
+                    "rating": 10,
                     "image": "http://test.com/cupcake2.jpg"
                 }
             })
