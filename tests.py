@@ -28,6 +28,7 @@ CUPCAKE_DATA_2 = {
 }
 
 
+
 class CupcakeViewsTestCase(TestCase):
     """Tests for views of API."""
 
@@ -107,3 +108,43 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_update_cupcake(self): 
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            
+            # ASK for testing ---> do we hard code values?
+            # testing for changes in rating 
+            CUPCAKE_DATA_2 = {
+                "flavor": "TestFlavor2",
+                "size": "TestSize2",
+                "rating": 1,
+                "image": "http://test.com/cupcake2.jpg"}
+            db.session.commit()
+
+            resp = client.patch(url, json=CUPCAKE_DATA_2)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+
+            print(data)
+            self.assertEqual(data, {
+                "cupcake": {
+                    "flavor": "TestFlavor2",
+                    "id" : self.cupcake.id,
+                    "size": "TestSize2",
+                    "rating": 1,
+                    "image": "http://test.com/cupcake2.jpg"
+                }
+            })
+            
+    def test_delete_cupcake(self):
+        
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            
+            resp = client.delete(url, json=CUPCAKE_DATA_2)
+            data = resp.json
+            
+            self.assertEqual(data, {"message":"Deleted"})
