@@ -1,0 +1,2 @@
+"""Models for Cupcake app."""
+
