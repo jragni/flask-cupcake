@@ -15,9 +15,6 @@ db.create_all()
 
 app.config['SECRET_KEY'] = "I'LL NEVER TELL!!"
 
-@app.route('/')
-def root():
-    pass
 
 @app.route('/api/cupcakes')  
 def list_all_cupcakes():
@@ -83,7 +80,7 @@ def delete_cupcake(cupcake_id):
     db.session.commit()
     return jsonify(message="Deleted")
 
-@app.route('/api')
+@app.route('/')
 def index_page():
     cupcakes = Cupcake.query.all()
     return render_template('index.html', cupcakes=cupcakes)

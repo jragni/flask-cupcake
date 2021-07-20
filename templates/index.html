@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Cupcakes</h1>
-    <ul>
+    <ul id="cupcake-list">
     
     </ul>
     <form action="/" method="POST">
@@ -22,8 +22,8 @@
             <input type="text" id="size" name="size">
         </div>
         <div>
-            <label for="rating">Rating</label>
-            <input type="number" id="rating" name="rating">
+            <label for="rating"  >Rating</label>
+            <input type="number" min="1" max="10" id="rating" name="rating">
         </div>
         <div>
             <label for="image">Image</label>
@@ -34,9 +34,9 @@
         </div>
     </form>
 
-
-
-    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/static/cupcakes.js"></script>
 </body>
 
 </html>
